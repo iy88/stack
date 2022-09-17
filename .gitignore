@@ -52,5 +52,5 @@ Mkfile.old
 dkms.conf
 
 # Visual Studio ignoring files
-/out/build/x64-debug
 /.vs
+/out/build

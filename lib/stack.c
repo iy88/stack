@@ -14,7 +14,7 @@ stackPtr createStack() {
 		return NULL;
 	}
 	st->size = 0;
-	st->head = (Node*)malloc(sizeof(Node));
+	st->head = (stack_node_ptr)malloc(sizeof(stack_node));
 	if (st->head == NULL) {
 		free(st);
 		return NULL;
@@ -26,7 +26,7 @@ stackPtr createStack() {
 }
 
 int stackPush(stackPtr st, void* data, int size) {
-	NodePtr current = st->head;
+	stack_node_ptr current = st->head;
 	if (current->data == NULL) {
 		current->data = malloc(size);
 		if (current->data == NULL) {
@@ -40,7 +40,7 @@ int stackPush(stackPtr st, void* data, int size) {
 	while (current->next != NULL) {
 		current = current->next;
 	}
-	current->next = (Node*)malloc(sizeof(Node));
+	current->next = (stack_node_ptr)malloc(sizeof(stack_node));
 	if (current->next == NULL) {
 		return 0;
 	}
@@ -56,7 +56,7 @@ int stackPush(stackPtr st, void* data, int size) {
 }
 
 void* stackPop(stackPtr st) {
-	NodePtr current = st->head;
+	stack_node_ptr current = st->head;
 	if (current->next == NULL) {
 		if (current->data == NULL) {
 			return NULL;
@@ -89,7 +89,7 @@ void* stackPop(stackPtr st) {
 	return res;
 }
 
-void __cleanNode(NodePtr node) {
+void __cleanNode(stack_node_ptr node) {
 	if (node->next != NULL) {
 		__cleanNode(node->next);
 	}
@@ -98,7 +98,7 @@ void __cleanNode(NodePtr node) {
 }
 
 void stackClean(stackPtr st) {
-	NodePtr current = st->head;
+	stack_node_ptr current = st->head;
 	if (current->next == NULL) {
 		if (current->data) {
 			free(current->data);

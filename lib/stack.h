@@ -3,17 +3,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct n {
+typedef struct s_n {
 	unsigned long long size;
 	void* data;
-	struct n* next;
-} Node;
+	struct s_n* next;
+} stack_node;
 
-typedef Node* NodePtr;
+typedef stack_node* stack_node_ptr;
 
 typedef struct {
 	unsigned long long size;
-	NodePtr head;
+	stack_node_ptr head;
 } stack;
 
 typedef stack* stackPtr;
