@@ -1,6 +1,6 @@
 #include "stack.h"
 
-void copy(void* dst, void* src, int size) {
+void __copy(void* dst, void* src, int size) {
 	char* d = dst;
 	char* s = src;
 	while (size-- > 0) {
@@ -33,7 +33,7 @@ int stackPush(stackPtr st, void* data, int size) {
 			return 0;
 		}
 		current->size = size;
-		copy(current->data, data, size);
+		__copy(current->data, data, size);
 		st->size++;
 		return 1;
 	}
@@ -49,7 +49,7 @@ int stackPush(stackPtr st, void* data, int size) {
 		return 0;
 	}
 	current->next->size = size;
-	copy(current->next->data, data, size);
+	__copy(current->next->data, data, size);
 	current->next->next = NULL;
 	st->size++;
 	return 1;
@@ -66,7 +66,7 @@ void* stackPop(stackPtr st) {
 			if (res == NULL) {
 				return NULL;
 			}
-			copy(res, current->data, current->size);
+			__copy(res, current->data, current->size);
 			free(current->data);
 			current->data = NULL;
 			current->size = NULL;
@@ -81,7 +81,7 @@ void* stackPop(stackPtr st) {
 	if (res == NULL) {
 		return NULL;
 	}
-	copy(res, current->next->data, current->next->size);
+	__copy(res, current->next->data, current->next->size);
 	free(current->next->data);
 	free(current->next);
 	current->next = NULL;
@@ -89,9 +89,9 @@ void* stackPop(stackPtr st) {
 	return res;
 }
 
-void cleanNode(NodePtr node) {
+void __cleanNode(NodePtr node) {
 	if (node->next != NULL) {
-		cleanNode(node->next);
+		__cleanNode(node->next);
 	}
 	free(node->data);
 	free(node);
@@ -110,7 +110,7 @@ void stackClean(stackPtr st) {
 		free(current->data);
 		current->data = NULL;
 		current->size = NULL;
-		cleanNode(current->next);
+		__cleanNode(current->next);
 		current->next = NULL;
 	}
 	st->size = 0;
